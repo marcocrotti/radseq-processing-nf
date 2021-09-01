@@ -46,9 +46,9 @@ trim_single_in_ch = Channel.fromFilePairs(params.reads)
 
 process trimmomatic_single {
 
-	tag "$genomeName"
+    tag "$genomeName"
 	
-	publishDir params.resultsTrim, mode: params.saveMode
+    publishDir params.resultsTrim, mode: params.saveMode
 	
     input:
     tuple genomeName, file(genomeReads) from trim_single_in_ch
@@ -69,9 +69,9 @@ process trimmomatic_single {
 
 process trimmomatic_paired {
 	
-	tag "$genomeName"
+    tag "$genomeName"
 	
-	publishDir params.resultsTrim, mode: params.saveMode
+    publishDir params.resultsTrim, mode: params.saveMode
 	
     input:
     tuple val(genomeName), file(genomeReads) from trim_single_out_ch
@@ -101,8 +101,8 @@ process alignment {
 	
 	input:	
 	tuple val(genomeName), file(genomeReads) from trim_paired_out_ch
-    file index from genome_index_ch.first()
-    file genome
+        file index from genome_index_ch.first()
+    	file genome
     
 	output:
 	file("${genomeName}.bam") into aligned_ch
