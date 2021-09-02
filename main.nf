@@ -116,5 +116,25 @@ process alignment {
 }
 
 
-aligned_ch.view()
+process stacks_refmap {
+
+	publishDir params.resultsRAD, mode: params.saveMode
+	
+	input:
+	path (sampleReads) from aligned_ch.toList()
+	
+	output:
+	set val("$name"), file("${name}/") into refmap_results
+	
+	script:
+	name= "ref_stacks"
+	
+	"""
+	mkdir ${name}
+	ref_map.pl -T 4 --samples ${params.resultsAlign} -o ${name} --popmap ${params.popmap}
+
+	"""
+
+}
+
 
